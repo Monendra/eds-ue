@@ -2,76 +2,80 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  console.log('Cards block decoration started');
+  console.log('Block content:', block.innerHTML);
+  
   /* change to ul, li */
   const ul = document.createElement('ul');
   [...block.children].forEach((row) => {
+    console.log('Processing row:', row.innerHTML);
+    
     const li = document.createElement('li');
     moveInstrumentation(row, li);
     
-    // Extract structured data from the row
-    const cardData = {};
+    // Process each column in the row
+    while (row.firstElementChild) li.append(row.firstElementChild);
     
-    // Process each column in the row to extract structured data
-    [...row.children].forEach((col) => {
-      const key = col.children[0]?.textContent.trim();
-      const value = col.children[1]?.innerHTML.trim();
+    // Organize card content
+    let imageDiv = null;
+    let bodyDiv = null;
+    
+    [...li.children].forEach((div) => {
+      console.log('Processing div:', div.innerHTML);
       
-      if (key && value) {
-        cardData[key.toLowerCase()] = value;
-        console.log(`Found field: ${key.toLowerCase()} = ${value}`);
+      if (div.children.length === 1 && div.querySelector('picture')) {
+        div.className = 'cards-card-image';
+        imageDiv = div;
+      } else {
+        div.className = 'cards-card-body';
+        bodyDiv = div;
       }
     });
     
-    console.log('Card data extracted:', cardData);
+    // Log what we found
+    console.log('Image div found:', imageDiv ? 'yes' : 'no');
+    console.log('Body div found:', bodyDiv ? 'yes' : 'no');
     
-    // Create card structure with image
-    if (row.querySelector('picture')) {
-      const imageDiv = document.createElement('div');
-      imageDiv.className = 'cards-card-image';
+    if (bodyDiv) {
+      console.log('Body div content:', bodyDiv.innerHTML);
       
-      // Get the image
-      const picture = row.querySelector('picture').cloneNode(true);
-      imageDiv.appendChild(picture);
-      li.appendChild(imageDiv);
+      // Ensure we have proper heading and paragraph structure
+      if (!bodyDiv.querySelector('h2, h3') && bodyDiv.textContent.trim()) {
+        console.log('Adding heading structure');
+        const content = bodyDiv.innerHTML;
+        const lines = bodyDiv.textContent.trim().split('\n');
+        const titleText = lines[0] || '';
+        
+        bodyDiv.innerHTML = `
+          <h3>${titleText}</h3>
+          <p>${content.replace(titleText, '')}</p>
+        `;
+      }
+      
+      // Add button if we have one in the content
+      const buttonLink = bodyDiv.querySelector('a[href]');
+      if (buttonLink && !buttonLink.classList.contains('button')) {
+        console.log('Converting link to button:', buttonLink.href);
+        
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+        
+        const button = document.createElement('a');
+        button.className = 'button';
+        button.href = buttonLink.href;
+        button.textContent = buttonLink.textContent || 'FIND OUT MORE';
+        
+        buttonContainer.appendChild(button);
+        bodyDiv.appendChild(buttonContainer);
+        
+        // Remove the original link if it was just a button
+        if (buttonLink.parentElement.childNodes.length === 1) {
+          buttonLink.parentElement.remove();
+        }
+      }
     }
     
-    // Create card body with title, description, and button
-    const bodyDiv = document.createElement('div');
-    bodyDiv.className = 'cards-card-body';
-    
-    // Match the exact field names from _cards.json
-    const title = cardData.title || cardData.cardtitle || '';
-    const description = cardData.description || cardData.carddescription || '';
-    
-    console.log(`Using title: "${title}", description: "${description}"`);
-    
-    // No processing needed - just use the data as provided
-    bodyDiv.innerHTML = `
-      <h3>${title}</h3>
-      <p>${description}</p>
-    `;
-    
-    // Add button if text and link are available - match exact field names
-    const buttonText = cardData.buttontext || cardData.buttonText || '';
-    const buttonLink = cardData.buttonlink || cardData.buttonLink || '#';
-    
-    console.log(`Button info: text="${buttonText}", link="${buttonLink}"`);
-    
-    if (buttonText) {
-      const buttonContainer = document.createElement('div');
-      buttonContainer.className = 'button-container';
-      
-      const button = document.createElement('a');
-      button.className = 'button';
-      button.href = buttonLink;
-      button.textContent = buttonText;
-      
-      buttonContainer.appendChild(button);
-      bodyDiv.appendChild(buttonContainer);
-    }
-    
-    li.appendChild(bodyDiv);
-    ul.appendChild(li);
+    ul.append(li);
   });
   
   // Optimize images
@@ -80,6 +84,8 @@ export default function decorate(block) {
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
   });
+  
+  console.log('Final cards HTML:', ul.innerHTML);
   
   block.textContent = '';
   block.append(ul);
