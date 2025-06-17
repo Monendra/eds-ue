@@ -157,23 +157,6 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "buttonText",
-        "value": "FIND OUT MORE",
-        "label": "Button Text",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "buttonLink",
-        "value": "#",
-        "label": "Button Link",
-        "valueType": "string",
-        "description": "Enter URL for the button link",
-        "multi": false
       }
     ]
   },
