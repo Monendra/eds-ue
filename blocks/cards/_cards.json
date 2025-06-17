@@ -54,7 +54,8 @@
           "name": "buttonText",
           "value": "FIND OUT MORE",
           "label": "Button Text",
-          "valueType": "string"
+          "valueType": "string",
+          "multi": false
         },
         {
           "component": "text",
@@ -62,7 +63,8 @@
           "value": "#",
           "label": "Button Link",
           "valueType": "string",
-          "description": "Enter URL for the button link"
+          "description": "Enter URL for the button link",
+          "multi": false
         }
       ]
     }
