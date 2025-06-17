@@ -49,7 +49,7 @@
   letter-spacing: -0.01em;
 }
 
-.cards .cards-card-body .card-description {
+.cards .cards-card-body p {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-bottom: 1.5rem;
@@ -59,17 +59,12 @@
   max-width: 95%; /* Prevent text from extending too wide */
 }
 
-.cards .cards-card-body .card-description p {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.cards .cards-card-body .card-description a {
+.cards .cards-card-body a {
   color: white;
   text-decoration: underline;
 }
 
-.cards .cards-card-body .card-description a:hover {
+.cards .cards-card-body a:hover {
   text-decoration: none;
 }
 
@@ -81,7 +76,7 @@
   margin-top: auto;
 }
 
-.cards .cards-card-body .button {
+.cards .cards-card-body a.button {
   display: inline-block;
   background-color: #e25e46; /* Coral button color - matched from image */
   color: #333;
@@ -100,7 +95,7 @@
   font-family: var(--body-font-family, Arial, sans-serif);
 }
 
-.cards .cards-card-body .button:hover {
+.cards .cards-card-body a.button:hover {
   background-color: #f8937f;
 }
 
@@ -119,11 +114,11 @@
     margin-bottom: 1rem;
   }
   
-  .cards .cards-card-body .card-description {
+  .cards .cards-card-body p {
     font-size: 1.125rem;
   }
   
-  .cards .cards-card-body .button {
+  .cards .cards-card-body a.button {
     padding: 12px 24px;
     font-size: 0.9rem;
   }
