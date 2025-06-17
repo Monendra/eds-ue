@@ -49,7 +49,7 @@
   letter-spacing: -0.01em;
 }
 
-.cards .cards-card-body p {
+.cards .cards-card-body .card-description {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-bottom: 1.5rem;
@@ -57,6 +57,20 @@
   font-family: var(--body-font-family);
   font-weight: 400;
   max-width: 95%; /* Prevent text from extending too wide */
+}
+
+.cards .cards-card-body .card-description p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.cards .cards-card-body .card-description a {
+  color: white;
+  text-decoration: underline;
+}
+
+.cards .cards-card-body .card-description a:hover {
+  text-decoration: none;
 }
 
 .cards .cards-card-body h3 strong {
@@ -67,6 +81,28 @@
   margin-top: auto;
 }
 
+.cards .cards-card-body .button {
+  display: inline-block;
+  background-color: #e25e46; /* Coral button color - matched from image */
+  color: #333;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 0; /* Flat edges as in reference */
+  text-transform: uppercase;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+  align-self: flex-start;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  font-family: var(--body-font-family, Arial, sans-serif);
+}
+
+.cards .cards-card-body .button:hover {
+  background-color: #f8937f;
+}
 
 @media (max-width: 768px) {
   .cards > ul > li {
@@ -83,8 +119,12 @@
     margin-bottom: 1rem;
   }
   
-  .cards .cards-card-body p {
+  .cards .cards-card-body .card-description {
     font-size: 1.125rem;
   }
-
+  
+  .cards .cards-card-body .button {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
 }

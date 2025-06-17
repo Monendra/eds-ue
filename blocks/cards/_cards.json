@@ -39,15 +39,47 @@
           "component": "reference",
           "valueType": "string",
           "name": "image",
-          "label": "Image",
-          "multi": false
+          "label": "Card Image",
+          "multi": false,
+          "mimeTypes": ["image/jpeg", "image/png", "image/svg+xml"]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Image Alt Text",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Card Title",
+          "value": ""
         },
         {
           "component": "richtext",
-          "name": "text",
+          "name": "description",
           "value": "",
-          "label": "Text",
+          "label": "Card Description",
           "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "buttonText",
+          "value": "FIND OUT MORE",
+          "label": "Button Text",
+          "valueType": "string",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "buttonLink",
+          "value": "#",
+          "label": "Button Link",
+          "valueType": "string",
+          "description": "Enter URL for the button link",
+          "multi": false
         }
       ]
     }
