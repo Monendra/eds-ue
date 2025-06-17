@@ -47,8 +47,8 @@ export default function decorate(block) {
         const titleText = lines[0] || '';
         
         bodyDiv.innerHTML = `
-          <h3>${titleText}</h3>
-          <p>${content.replace(titleText, '')}</p>
+          <h3>:::${titleText}</h3>
+          <p>:::${content.replace(titleText, '')}</p>
         `;
       }
       
