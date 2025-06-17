@@ -94,7 +94,7 @@ header {
 
 /* Create a header spacer to push content down */
 main > :first-child {
-  margin-top: var(--header-height); /* Add margin to first element in main instead */
+  margin-top: 0;
 }
 
 header .header,
@@ -263,4 +263,9 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* Remove margin-top rule that's causing extra space */
+main > .hero-container:first-child {
+  margin-top: 0;
 }

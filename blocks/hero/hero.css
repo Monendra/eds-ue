@@ -37,7 +37,7 @@
 
 /* Make sure the hero is the first child in main to receive the margin-top */
 main > .hero-container:first-child {
-  margin-top: var(--header-height);
+  margin-top: 0;
 }
 
 @media (width >= 900px) {
