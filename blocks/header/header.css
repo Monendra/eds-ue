@@ -295,6 +295,11 @@ header nav .nav-sections ul > li > ul > li {
 
 /* tools */
 header nav .nav-tools {
-  display: none;
+  display: none !important;
   visibility: hidden;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  left: -9999px;
 }

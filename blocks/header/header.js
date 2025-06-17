@@ -158,6 +158,13 @@ export default async function decorate(block) {
       fragment.removeChild(el);
       continue;
     }
+    
+    // Skip any search/tools sections
+    if (el.querySelector('form') || el.querySelector('input[type="search"]')) {
+      fragment.removeChild(el);
+      continue;
+    }
+    
     sections.append(fragment.firstElementChild);
   }
   
