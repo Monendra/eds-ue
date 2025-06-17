@@ -18,8 +18,11 @@ export default function decorate(block) {
       
       if (key && value) {
         cardData[key.toLowerCase()] = value;
+        console.log(`Found field: ${key.toLowerCase()} = ${value}`);
       }
     });
+    
+    console.log('Card data extracted:', cardData);
     
     // Create card structure with image
     if (row.querySelector('picture')) {
@@ -36,21 +39,32 @@ export default function decorate(block) {
     const bodyDiv = document.createElement('div');
     bodyDiv.className = 'cards-card-body';
     
+    // Match the exact field names from _cards.json
+    const title = cardData.title || cardData.cardtitle || '';
+    const description = cardData.description || cardData.carddescription || '';
+    
+    console.log(`Using title: "${title}", description: "${description}"`);
+    
     // No processing needed - just use the data as provided
     bodyDiv.innerHTML = `
-      <h3>${cardData.title}</h3>
-      <p>${cardData.description}</p>
+      <h3>${title}</h3>
+      <p>${description}</p>
     `;
     
-    // Add button if text and link are available
-    if (cardData.buttontext && cardData.buttonlink) {
+    // Add button if text and link are available - match exact field names
+    const buttonText = cardData.buttontext || cardData.buttonText || '';
+    const buttonLink = cardData.buttonlink || cardData.buttonLink || '#';
+    
+    console.log(`Button info: text="${buttonText}", link="${buttonLink}"`);
+    
+    if (buttonText) {
       const buttonContainer = document.createElement('div');
       buttonContainer.className = 'button-container';
       
       const button = document.createElement('a');
       button.className = 'button';
-      button.href = cardData.buttonlink;
-      button.textContent = cardData.buttontext;
+      button.href = buttonLink;
+      button.textContent = buttonText;
       
       buttonContainer.appendChild(button);
       bodyDiv.appendChild(buttonContainer);
