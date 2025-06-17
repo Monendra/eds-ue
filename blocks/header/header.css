@@ -4,6 +4,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: 2;
   position: fixed;
+  padding: 10px 0;
 }
 
 header nav {
@@ -33,6 +34,11 @@ header nav[aria-expanded='true'] {
     gap: 0 32px;
     max-width: 1264px;
     padding: 0 32px;
+    height: 80px;
+  }
+
+  header .nav-wrapper {
+    padding: 15px 0;
   }
 
   header nav[aria-expanded='true'] {
@@ -239,11 +245,15 @@ header nav .nav-sections ul > li > ul > li {
     display: flex;
     gap: 24px;
     margin: 0;
+    align-items: center;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
     flex: 0 1 auto;
     position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
@@ -281,14 +291,27 @@ header nav .nav-sections ul > li > ul > li {
   /* Desktop navigation layout */
   header nav .nav-sections {
     justify-content: flex-end;
+    align-items: center;
   }
   
   header nav .nav-sections .section:first-child {
     margin-right: auto;
+    display: flex;
+    align-items: center;
   }
   
   header nav .nav-sections .section:nth-child(2) {
     margin-left: auto;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  /* Ensure navigation links are vertically centered */
+  header nav .nav-sections .default-content-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 }
 
