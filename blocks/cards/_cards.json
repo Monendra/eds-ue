@@ -61,7 +61,8 @@
           "name": "buttonLink",
           "value": "#",
           "label": "Button Link",
-          "valueType": "string"
+          "valueType": "string",
+          "description": "Enter URL for the button link"
         }
       ]
     }
