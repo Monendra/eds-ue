@@ -18,6 +18,24 @@ export default function decorate(block) {
       } else {
         div.className = 'cards-card-body';
         
+        // Check for button configuration
+        let buttonText = 'FIND OUT MORE';
+        let buttonLink = '#';
+        
+        // Extract button text and link if they exist in the content
+        const buttonTextDiv = div.querySelector('div:nth-child(3)');
+        const buttonLinkDiv = div.querySelector('div:nth-child(4)');
+        
+        if (buttonTextDiv && buttonTextDiv.textContent.trim()) {
+          buttonText = buttonTextDiv.textContent.trim();
+          buttonTextDiv.remove();
+        }
+        
+        if (buttonLinkDiv && buttonLinkDiv.textContent.trim()) {
+          buttonLink = buttonLinkDiv.textContent.trim();
+          buttonLinkDiv.remove();
+        }
+        
         // Ensure proper heading structure
         const firstChild = div.firstElementChild;
         if (firstChild && (firstChild.tagName !== 'H2' && firstChild.tagName !== 'H3')) {
@@ -31,6 +49,18 @@ export default function decorate(block) {
             <p>${paragraphText}</p>
           `;
         }
+        
+        // Add button
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+        
+        const button = document.createElement('a');
+        button.className = 'button';
+        button.href = buttonLink;
+        button.textContent = buttonText;
+        
+        buttonContainer.appendChild(button);
+        div.appendChild(buttonContainer);
       }
     });
     

@@ -69,9 +69,9 @@
 
 .cards .cards-card-body .button {
   display: inline-block;
-  background-color: #f47766; /* Coral button color */
+  background-color: #e25e46; /* Coral button color - matched from image */
   color: #333;
-  font-weight: bold;
+  font-weight: 700;
   text-decoration: none;
   padding: 16px 32px;
   border-radius: 0; /* Flat edges as in reference */
@@ -80,6 +80,10 @@
   transition: background-color 0.3s ease;
   margin-top: auto;
   align-self: flex-start;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  font-family: var(--body-font-family, Arial, sans-serif);
 }
 
 .cards .cards-card-body .button:hover {
@@ -103,5 +107,10 @@
   
   .cards .cards-card-body p {
     font-size: 1.125rem;
+  }
+  
+  .cards .cards-card-body .button {
+    padding: 12px 24px;
+    font-size: 0.9rem;
   }
 }

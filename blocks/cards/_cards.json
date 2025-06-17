@@ -48,6 +48,20 @@
           "value": "",
           "label": "Text",
           "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "buttonText",
+          "value": "FIND OUT MORE",
+          "label": "Button Text",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "buttonLink",
+          "value": "#",
+          "label": "Button Link",
+          "valueType": "string"
         }
       ]
     }
