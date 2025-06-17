@@ -104,88 +104,12 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
- * Creates a logo element with configurable image
- * @param {Element} block The header block element
- * @returns {Element} The logo element
- */
-function createLogo(block) {
-  const logo = document.createElement('div');
-  logo.classList.add('nav-brand');
-  
-  // Get logo configuration from block metadata
-  // First check if there are specific data attributes set by Universal Editor
-  let logoSrc = '/content/dam/digital/images/badges-and-logos/WSU_Logo_LeftAligned_Centred_RGB.png';
-  let logoAlt = 'Western Sydney University';
-  let logoUrl = '/';
-  
-  // Look for data attributes that would be set by Universal Editor
-  const blockData = block.dataset || {};
-  
-  // Check for logo image path from Universal Editor
-  if (blockData.logo) {
-    logoSrc = blockData.logo;
-  } else {
-    // Fallback to img tag if present
-    const logoImg = block.querySelector('img');
-    if (logoImg) {
-      logoSrc = logoImg.src;
-    }
-  }
-  
-  // Check for logo alt text from Universal Editor
-  if (blockData.logoAlt) {
-    logoAlt = blockData.logoAlt;
-  } else {
-    // Fallback to img alt if present
-    const logoImg = block.querySelector('img');
-    if (logoImg && logoImg.alt) {
-      logoAlt = logoImg.alt;
-    }
-  }
-  
-  // Check for logo URL from Universal Editor
-  if (blockData.logoUrl) {
-    logoUrl = blockData.logoUrl;
-  } else {
-    // Fallback to anchor href if present
-    const logoLink = block.querySelector('a');
-    if (logoLink && logoLink.href) {
-      logoUrl = logoLink.href;
-    }
-  }
-  
-  // Create logo link with image
-  logo.innerHTML = `
-    <a href="${logoUrl}" aria-label="${logoAlt}">
-      <img src="${logoSrc}" alt="${logoAlt}">
-    </a>
-  `;
-  
-  return logo;
-}
-
-/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // Check if we have Universal Editor data in the block
-  const editorData = {};
-  
-  // Store any Universal Editor data from block.dataset to editorData
-  if (block.dataset) {
-    Object.keys(block.dataset).forEach((key) => {
-      // Only copy known fields from our model
-      if (['logo', 'logoAlt', 'logoUrl'].includes(key)) {
-        editorData[key] = block.dataset[key];
-      }
-    });
-  }
-  
-  // Apply Universal Editor data back to block.dataset for createLogo to use
-  Object.keys(editorData).forEach((key) => {
-    block.dataset[key] = editorData[key];
-  });
+  // Store original content before making any changes
+  const originalContent = block.cloneNode(true);
   
   // load nav as fragment
   const navMeta = getMetadata('nav');
@@ -197,32 +121,99 @@ export default async function decorate(block) {
   const nav = document.createElement('nav');
   nav.id = 'nav';
   
-  // Create logo element
-  const logo = createLogo(block);
-  
   // Add navigation sections from fragment
   const sections = document.createElement('div');
   sections.classList.add('nav-sections');
   
-  // Move content from fragment to sections
-  while (fragment.firstElementChild) {
-    const el = fragment.firstElementChild;
-    // Skip the first element (which would be the brand/logo in the original fragment)
-    if (!sections.firstElementChild && el.querySelector('a')?.textContent.trim() === 'Button') {
-      fragment.removeChild(el);
-      continue;
+  // Find the picture element for the logo
+  const picture = originalContent.querySelector('picture');
+  if (picture) {
+    // Create a section for the logo
+    const logoSection = document.createElement('div');
+    logoSection.classList.add('section');
+    logoSection.dataset.sectionStatus = 'loaded';
+    
+    const logoWrapper = document.createElement('div');
+    logoWrapper.classList.add('default-content-wrapper');
+    
+    // Clone the picture element
+    const pictureClone = picture.cloneNode(true);
+    
+    // Ensure the picture element is properly formed
+    if (!pictureClone.querySelector('source') || !pictureClone.querySelector('img')) {
+      // If picture element is not properly formed, create a simple img element
+      const img = document.createElement('img');
+      img.src = 'https://main--eds-ue--monendra.aem.page/media_1539a7929c0d087edc0dadadecdfdd527ecc591ed.png';
+      img.alt = 'Western Sydney University';
+      img.width = 1435;
+      img.height = 212;
+      logoWrapper.appendChild(img);
+    } else {
+      logoWrapper.appendChild(pictureClone);
     }
     
-    // Skip any search/tools sections
-    if (el.querySelector('form') || el.querySelector('input[type="search"]')) {
-      fragment.removeChild(el);
-      continue;
-    }
+    logoSection.appendChild(logoWrapper);
+    sections.appendChild(logoSection);
+  } else {
+    // If no picture element is found, create a simple img element as fallback
+    const logoSection = document.createElement('div');
+    logoSection.classList.add('section');
+    logoSection.dataset.sectionStatus = 'loaded';
     
-    sections.append(fragment.firstElementChild);
+    const logoWrapper = document.createElement('div');
+    logoWrapper.classList.add('default-content-wrapper');
+    
+    const img = document.createElement('img');
+    img.src = 'https://main--eds-ue--monendra.aem.page/media_1539a7929c0d087edc0dadadecdfdd527ecc591ed.png';
+    img.alt = 'Western Sydney University';
+    img.width = 1435;
+    img.height = 212;
+    
+    logoWrapper.appendChild(img);
+    logoSection.appendChild(logoWrapper);
+    sections.appendChild(logoSection);
   }
   
-  nav.append(logo);
+  // Find navigation items from the original content or fragment
+  const navItems = originalContent.querySelector('ul');
+  if (navItems) {
+    // Create a section for navigation items
+    const navSection = document.createElement('div');
+    navSection.classList.add('section');
+    navSection.dataset.sectionStatus = 'loaded';
+    
+    const navWrapper = document.createElement('div');
+    navWrapper.classList.add('default-content-wrapper');
+    navWrapper.appendChild(navItems.cloneNode(true));
+    
+    navSection.appendChild(navWrapper);
+    sections.appendChild(navSection);
+  } else {
+    // Move content from fragment to sections if no navigation items found in original content
+    while (fragment.firstElementChild) {
+      const el = fragment.firstElementChild;
+      // Skip the first element (which would be the brand/logo in the original fragment)
+      if (!sections.querySelector('.section:nth-child(2)') && el.querySelector('a')?.textContent.trim() === 'Button') {
+        fragment.removeChild(el);
+        continue;
+      }
+      
+      // Skip any search/tools sections
+      if (el.querySelector('form') || el.querySelector('input[type="search"]')) {
+        fragment.removeChild(el);
+        continue;
+      }
+      
+      // Skip any picture elements or standalone images (that aren't part of navigation)
+      if (el.querySelector('picture') || (el.querySelector('img') && !el.querySelector('ul'))) {
+        fragment.removeChild(el);
+        continue;
+      }
+      
+      sections.append(fragment.firstElementChild);
+    }
+  }
+  
   nav.append(sections);
 
   const navSections = nav.querySelector('.nav-sections');
