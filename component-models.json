@@ -245,5 +245,45 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "top-header",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "students-link",
+        "label": "Students Link",
+        "value": "https://www.westernsydney.edu.au/students"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "staff-link",
+        "label": "Staff Link",
+        "value": "https://www.westernsydney.edu.au/staff"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mywestern-link",
+        "label": "MyWestern Link",
+        "value": "https://www.westernsydney.edu.au/mywestern"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search-link",
+        "label": "Search Link",
+        "value": "https://www.westernsydney.edu.au/search"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "sign-into-text",
+        "label": "Sign Into Button Text",
+        "value": "SIGN INTO"
+      }
+    ]
   }
 ]
