@@ -29,6 +29,21 @@ export default function decorate(block) {
       } else {
         div.className = 'cards-card-body';
         bodyDiv = div;
+        
+        // Check for cardBody field
+        const cardBodyField = [...div.children].find(child => {
+          const keyElement = child.children[0];
+          return keyElement && keyElement.textContent.trim().toLowerCase() === 'cardbody';
+        });
+        
+        if (cardBodyField) {
+          console.log('Found cardBody field:', cardBodyField.innerHTML);
+          const valueElement = cardBodyField.children[1];
+          if (valueElement) {
+            div.innerHTML = valueElement.innerHTML;
+            console.log('Set body content to:', div.innerHTML);
+          }
+        }
       }
     });
     
