@@ -112,11 +112,47 @@ function createLogo(block) {
   const logo = document.createElement('div');
   logo.classList.add('nav-brand');
   
-  // Get logo configuration from block data
-  const logoImg = block.querySelector('img');
-  const logoSrc = logoImg ? logoImg.src : '/content/dam/digital/images/badges-and-logos/WSU_Logo_LeftAligned_Centred_RGB.png';
-  const logoAlt = logoImg ? logoImg.alt : 'Western Sydney University';
-  const logoUrl = block.querySelector('a') ? block.querySelector('a').href : '/';
+  // Get logo configuration from block metadata
+  // First check if there are specific data attributes set by Universal Editor
+  let logoSrc = '/content/dam/digital/images/badges-and-logos/WSU_Logo_LeftAligned_Centred_RGB.png';
+  let logoAlt = 'Western Sydney University';
+  let logoUrl = '/';
+  
+  // Look for data attributes that would be set by Universal Editor
+  const blockData = block.dataset || {};
+  
+  // Check for logo image path from Universal Editor
+  if (blockData.logo) {
+    logoSrc = blockData.logo;
+  } else {
+    // Fallback to img tag if present
+    const logoImg = block.querySelector('img');
+    if (logoImg) {
+      logoSrc = logoImg.src;
+    }
+  }
+  
+  // Check for logo alt text from Universal Editor
+  if (blockData.logoAlt) {
+    logoAlt = blockData.logoAlt;
+  } else {
+    // Fallback to img alt if present
+    const logoImg = block.querySelector('img');
+    if (logoImg && logoImg.alt) {
+      logoAlt = logoImg.alt;
+    }
+  }
+  
+  // Check for logo URL from Universal Editor
+  if (blockData.logoUrl) {
+    logoUrl = blockData.logoUrl;
+  } else {
+    // Fallback to anchor href if present
+    const logoLink = block.querySelector('a');
+    if (logoLink && logoLink.href) {
+      logoUrl = logoLink.href;
+    }
+  }
   
   // Create logo link with image
   logo.innerHTML = `
@@ -133,6 +169,24 @@ function createLogo(block) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  // Check if we have Universal Editor data in the block
+  const editorData = {};
+  
+  // Store any Universal Editor data from block.dataset to editorData
+  if (block.dataset) {
+    Object.keys(block.dataset).forEach((key) => {
+      // Only copy known fields from our model
+      if (['logo', 'logoAlt', 'logoUrl'].includes(key)) {
+        editorData[key] = block.dataset[key];
+      }
+    });
+  }
+  
+  // Apply Universal Editor data back to block.dataset for createLogo to use
+  Object.keys(editorData).forEach((key) => {
+    block.dataset[key] = editorData[key];
+  });
+  
   // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';

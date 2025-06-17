@@ -197,7 +197,12 @@
         "valueType": "string",
         "name": "logo",
         "label": "Logo Image",
-        "multi": false
+        "multi": false,
+        "mimeTypes": [
+          "image/jpeg",
+          "image/png",
+          "image/svg+xml"
+        ]
       },
       {
         "component": "text",
