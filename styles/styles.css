@@ -82,7 +82,6 @@ body {
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
   line-height: 1.6;
-  padding-top: var(--header-height); /* Add padding to push content below fixed header */
 }
 
 body.appear {
@@ -94,9 +93,8 @@ header {
 }
 
 /* Create a header spacer to push content down */
-.header-spacer {
-  height: var(--header-height);
-  width: 100%;
+main > :first-child {
+  margin-top: var(--header-height); /* Add margin to first element in main instead */
 }
 
 header .header,
