@@ -190,6 +190,32 @@
     ]
   },
   {
+    "id": "header",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logo",
+        "label": "Logo Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logoAlt",
+        "label": "Logo Alt Text",
+        "value": "Western Sydney University"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logoUrl",
+        "label": "Logo URL",
+        "value": "/"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {

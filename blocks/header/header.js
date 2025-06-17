@@ -28,7 +28,7 @@ function closeOnFocusLost(e) {
     const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
     if (navSectionExpanded && isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections, false);
+      toggleAllNavSections(navSections);
     } else if (!isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
       toggleMenu(nav, navSections, false);
@@ -104,6 +104,31 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Creates a logo element with configurable image
+ * @param {Element} block The header block element
+ * @returns {Element} The logo element
+ */
+function createLogo(block) {
+  const logo = document.createElement('div');
+  logo.classList.add('nav-brand');
+  
+  // Get logo configuration from block data
+  const logoImg = block.querySelector('img');
+  const logoSrc = logoImg ? logoImg.src : '/content/dam/digital/images/badges-and-logos/WSU_Logo_LeftAligned_Centred_RGB.png';
+  const logoAlt = logoImg ? logoImg.alt : 'Western Sydney University';
+  const logoUrl = block.querySelector('a') ? block.querySelector('a').href : '/';
+  
+  // Create logo link with image
+  logo.innerHTML = `
+    <a href="${logoUrl}" aria-label="${logoAlt}">
+      <img src="${logoSrc}" alt="${logoAlt}">
+    </a>
+  `;
+  
+  return logo;
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -117,20 +142,27 @@ export default async function decorate(block) {
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
-
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
-  });
-
-  const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+  
+  // Create logo element
+  const logo = createLogo(block);
+  
+  // Add navigation sections from fragment
+  const sections = document.createElement('div');
+  sections.classList.add('nav-sections');
+  
+  // Move content from fragment to sections
+  while (fragment.firstElementChild) {
+    const el = fragment.firstElementChild;
+    // Skip the first element (which would be the brand/logo in the original fragment)
+    if (!sections.firstElementChild && el.querySelector('a')?.textContent.trim() === 'Button') {
+      fragment.removeChild(el);
+      continue;
+    }
+    sections.append(fragment.firstElementChild);
   }
+  
+  nav.append(logo);
+  nav.append(sections);
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
