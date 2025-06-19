@@ -3,14 +3,17 @@ export default function decorate(block) {
   tileWrapper.className = 'tile tile__theme tile__2x1 has-image';
 
   // Get content from the block
-  const link = block.querySelector('a') || { href: '#', textContent: '' };
-  const title = link.textContent;
-  const backgroundImage = block.querySelector('img');
-  const backgroundUrl = backgroundImage ? backgroundImage.src : '';
+  const div = block.querySelector('div');
+  const img = div.querySelector('img');
+  const link = div.querySelector('a');
+  
+  const title = link ? link.textContent : '';
+  const href = link ? link.href : '#';
+  const backgroundUrl = img ? img.src : '';
 
   // Create the inner structure
   const html = `
-    <a href="${link.href}" title="${title}">
+    <a href="${href}" title="${title}">
       <div class="tile__wrapper js-resizer-background" style="background-image: url('${backgroundUrl}');">
         <div class="tile__info">
           <div class="tile__content black">
