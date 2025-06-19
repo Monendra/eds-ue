@@ -185,6 +185,18 @@
     ]
   },
   {
+    "id": "footer",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content",
+        "label": "Footer Content",
+        "description": "The content to display in the footer (supports rich text formatting)"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -255,25 +267,18 @@
     "id": "tile",
     "fields": [
       {
-        "component": "reference",
-        "name": "image",
-        "label": "Background Image",
-        "multi": false,
-        "mimeTypes": [
-          "image/jpeg",
-          "image/png",
-          "image/svg+xml"
-        ]
-      },
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link"
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title",
+        "description": "The title text to display in the tile"
       },
       {
         "component": "text",
-        "name": "title",
-        "label": "Title"
+        "valueType": "string",
+        "name": "link",
+        "label": "Link URL",
+        "description": "The URL that the tile should link to"
       }
     ]
   }
