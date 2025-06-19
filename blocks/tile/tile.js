@@ -1,46 +1,45 @@
 export default function decorate(block) {
-  const tileWrapper = document.createElement('article');
-  tileWrapper.className = 'tile tile__2x1';
+  // Get title and link from block data
+  const title = block.textContent.trim();
+  const link = block.querySelector('a')?.href || '';
 
-  // Get content from the block
-  const rows = block.children;
-  let backgroundUrl = '';
-  let href = '#';
-  let title = '';
-
-  // Extract content from the block structure
-  [...rows].forEach((row) => {
-    const anchor = row.querySelector('a');
-    const img = row.querySelector('img');
-    const text = row.textContent.trim();
-
-    if (img) {
-      backgroundUrl = img.src;
-    }
-    if (anchor) {
-      href = anchor.href;
-    }
-    if (text && !text.includes('Link here')) {
-      title = text;
-    }
-  });
-
-  // Create the inner structure
-  const html = `
-    <a href="${href}" title="${title}">
-      <div class="tile__wrapper" style="background-image: url('${backgroundUrl}');">
-        <div class="tile__info">
-          <div class="tile__content black">
-            <div class="component component--title">
-              <p class="title__text secondary">${title}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </a>
-  `;
-
-  tileWrapper.innerHTML = html;
+  // Clear existing content
   block.textContent = '';
-  block.append(tileWrapper);
-} 
+
+  // Create article element with tile classes
+  const article = document.createElement('article');
+  article.className = 'tile tile__theme tile__2x1 has-image';
+
+  // Create link element
+  const a = document.createElement('a');
+  a.href = link;
+  a.title = title;
+
+  // Create wrapper div
+  const wrapper = document.createElement('div');
+  wrapper.className = 'tile__wrapper';
+
+  // Create info and content divs
+  const info = document.createElement('div');
+  info.className = 'tile__info';
+
+  const content = document.createElement('div');
+  content.className = 'tile__content black';
+
+  // Create title component
+  const titleComponent = document.createElement('div');
+  titleComponent.className = 'component component--title';
+
+  const titleText = document.createElement('p');
+  titleText.className = 'title__text secondary';
+  titleText.textContent = title;
+
+  // Assemble the structure
+  titleComponent.appendChild(titleText);
+  content.appendChild(titleComponent);
+  info.appendChild(content);
+  wrapper.appendChild(info);
+  a.appendChild(wrapper);
+  article.appendChild(a);
+  block.appendChild(article);
+}
