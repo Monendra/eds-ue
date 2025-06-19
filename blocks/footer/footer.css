@@ -31,15 +31,10 @@
   margin-bottom: 30px;
 }
 
-.aboriginal-flags {
-  display: block;
-  margin: 15px 0;
-  font-size: 24px;
-}
-
 .acknowledgement p {
   line-height: 1.6;
-  margin: 0;
+  margin: 15px 0 0;
+  font-size: 16px;
 }
 
 /* Contact Section */
@@ -125,5 +120,9 @@
   .footer-links {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .acknowledgement p {
+    font-size: 14px;
   }
 }
