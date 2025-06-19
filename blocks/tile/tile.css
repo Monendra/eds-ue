@@ -29,7 +29,6 @@
   position: relative;
   width: 100%;
   padding: 32px;
-  background: transparent;
   z-index: 2;
 }
 
@@ -66,9 +65,8 @@
   height: 100%;
 }
 
-/* Hide original elements */
-.tile-block img,
-.tile-block > div > a {
+/* Hide the original block content */
+.block.tile > div {
   display: none;
 }
 

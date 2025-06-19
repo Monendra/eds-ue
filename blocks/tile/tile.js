@@ -3,13 +3,27 @@ export default function decorate(block) {
   tileWrapper.className = 'tile tile__2x1';
 
   // Get content from the block
-  const div = block.querySelector('div');
-  const img = div.querySelector('img');
-  const link = div.querySelector('a');
-  
-  const title = link ? link.textContent : '';
-  const href = link ? link.href : '#';
-  const backgroundUrl = img ? img.src : '';
+  const rows = block.children;
+  let backgroundUrl = '';
+  let href = '#';
+  let title = '';
+
+  // Extract content from the block structure
+  [...rows].forEach((row) => {
+    const anchor = row.querySelector('a');
+    const img = row.querySelector('img');
+    const text = row.textContent.trim();
+
+    if (img) {
+      backgroundUrl = img.src;
+    }
+    if (anchor) {
+      href = anchor.href;
+    }
+    if (text && !text.includes('Link here')) {
+      title = text;
+    }
+  });
 
   // Create the inner structure
   const html = `
