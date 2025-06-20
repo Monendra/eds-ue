@@ -1,0 +1,41 @@
+{
+  "definitions": [
+    {
+      "title": "Tile",
+      "id": "tile",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Tile",
+              "model": "tile"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "tile",
+      "fields": [
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "title",
+          "label": "Title",
+          "description": "The title text to display in the tile"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "link",
+          "label": "Link URL",
+          "description": "The URL that the tile should link to"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

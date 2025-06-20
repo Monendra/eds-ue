@@ -267,14 +267,14 @@
     "id": "tile",
     "fields": [
       {
-        "component": "text",
+        "component": "richtext",
         "valueType": "string",
         "name": "title",
         "label": "Title",
         "description": "The title text to display in the tile"
       },
       {
-        "component": "text",
+        "component": "reference",
         "valueType": "string",
         "name": "link",
         "label": "Link URL",
