@@ -7,7 +7,17 @@ export default function decorate(block) {
   
   /* change to ul, li */
   const ul = document.createElement('ul');
-  [...block.children].forEach((row) => {
+  
+  // Limit to maximum 2 tiles
+  const rows = [...block.children];
+  const maxTiles = 2;
+  const tilesToProcess = rows.slice(0, maxTiles);
+  
+  if (rows.length > maxTiles) {
+    console.log(`Note: Block has ${rows.length} rows, but only processing first ${maxTiles} tiles`);
+  }
+  
+  tilesToProcess.forEach((row) => {
     console.log('Processing row:', row.innerHTML);
     
     const li = document.createElement('li');
@@ -54,17 +64,24 @@ export default function decorate(block) {
     if (bodyDiv) {
       console.log('Body div content:', bodyDiv.innerHTML);
       
-      // Ensure we have proper heading and paragraph structure
-      if (!bodyDiv.querySelector('h2, h3') && bodyDiv.textContent.trim()) {
-        console.log('Adding heading structure');
-        const content = bodyDiv.innerHTML;
-        const lines = bodyDiv.textContent.trim().split('\n');
-        const titleText = lines[0] || '';
+      // Clean up the content and create proper structure
+      const content = bodyDiv.textContent.trim();
+      const lines = content.split('\n').filter(line => line.trim());
+      
+      if (lines.length > 0) {
+        const titleText = lines[0].trim();
+        const remainingContent = lines.slice(1).join(' ').trim();
         
-        bodyDiv.innerHTML = `
-          <h3>:::${titleText}</h3>
-          <p>:::${content.replace(titleText, '')}</p>
-        `;
+        // Create clean HTML structure
+        let htmlContent = '';
+        if (titleText) {
+          htmlContent += `<h3>${titleText}</h3>`;
+        }
+        if (remainingContent) {
+          htmlContent += `<p>${remainingContent}</p>`;
+        }
+        
+        bodyDiv.innerHTML = htmlContent;
       }
       
       // Add button if we have one in the content
