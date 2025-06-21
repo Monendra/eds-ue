@@ -1,0 +1,125 @@
+.tiles > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 24px;
+}
+
+.tiles > ul > li {
+  background-color: #8e1b33; /* Burgundy red background - Western Sydney University brand color */
+  color: white;
+  border-radius: 0; /* Remove border radius for flat edges as in reference */
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 400px; /* Minimum height for consistent tile appearance */
+}
+
+.tiles .tiles-tile-body {
+  margin: 32px; /* Increased padding to match reference */
+  padding: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tiles .tiles-tile-image {
+  line-height: 0;
+}
+
+.tiles > ul > li img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.tiles .tiles-tile-body h2,
+.tiles .tiles-tile-body h3 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: white;
+  font-family: var(--heading-font-family);
+  letter-spacing: -0.01em;
+}
+
+.tiles .tiles-tile-body p {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  max-width: 95%; /* Prevent text from extending too wide */
+}
+
+.tiles .tiles-tile-body a {
+  color: white;
+  text-decoration: underline;
+}
+
+.tiles .tiles-tile-body a:hover {
+  text-decoration: none;
+}
+
+.tiles .tiles-tile-body h3 strong {
+  font-weight: 700;
+}
+
+.tiles .tiles-tile-body .button-container {
+  margin-top: auto;
+}
+
+.tiles .tiles-tile-body a.button {
+  display: inline-block;
+  background-color: #e25e46; /* Coral button color - matched from image */
+  color: #333;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 0; /* Flat edges as in reference */
+  text-transform: uppercase;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+  align-self: flex-start;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  font-family: var(--body-font-family, Arial, sans-serif);
+}
+
+.tiles .tiles-tile-body a.button:hover {
+  background-color: #f8937f;
+}
+
+@media (max-width: 768px) {
+  .tiles > ul > li {
+    min-height: 350px;
+  }
+  
+  .tiles .tiles-tile-body {
+    margin: 24px;
+  }
+  
+  .tiles .tiles-tile-body h2,
+  .tiles .tiles-tile-body h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tiles .tiles-tile-body p {
+    font-size: 1.125rem;
+  }
+  
+  .tiles .tiles-tile-body a.button {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+}

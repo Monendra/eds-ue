@@ -267,18 +267,23 @@
     "id": "tile",
     "fields": [
       {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "title",
-        "label": "Title",
-        "description": "The title text to display in the tile"
-      },
-      {
         "component": "reference",
         "valueType": "string",
-        "name": "link",
-        "label": "Link URL",
-        "description": "The URL that the tile should link to"
+        "name": "image",
+        "label": "Tile Image",
+        "multi": false,
+        "mimeTypes": [
+          "image/jpeg",
+          "image/png",
+          "image/svg+xml"
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "tileBody",
+        "value": "",
+        "label": "Tile Body Content",
+        "valueType": "string"
       }
     ]
   }
