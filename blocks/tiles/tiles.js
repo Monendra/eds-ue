@@ -1,4 +1,3 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
@@ -9,46 +8,36 @@ export default function decorate(block) {
   // Process each row in the block
   [...block.children].forEach((row) => {
     const li = document.createElement('li');
+    moveInstrumentation(row, li);
     
-    // Look for specific field keys in the row
-    let imageDiv = null;
-    let tileBodyDiv = null;
+    // Find the tileText field
+    let tileText = '';
     
-    // Find the image and tileBody divs based on the model fields
+    // Look for the tileText field in the row
     [...row.children].forEach((div) => {
       const key = div.children[0]?.textContent?.trim().toLowerCase();
       
-      if (key === 'image' && div.children[1]?.querySelector('picture')) {
-        imageDiv = div.children[1];
-      } else if (key === 'tilebody' || key === 'tile body content') {
-        tileBodyDiv = div.children[1];
+      if (key === 'tiletext' || key === 'tile text') {
+        const valueDiv = div.children[1];
+        if (valueDiv) {
+          tileText = valueDiv.innerHTML;
+        }
       }
     });
     
-    // If we found an image, add it to the tile
-    if (imageDiv && imageDiv.querySelector('picture')) {
-      const img = imageDiv.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-        moveInstrumentation(img, optimizedPic.querySelector('img'));
-        li.appendChild(optimizedPic);
+    // If tileText is not found, use fallback method (for backward compatibility)
+    if (!tileText) {
+      // Use the content of the first or second div as fallback
+      const contentDiv = row.children[1] || row.children[0];
+      if (contentDiv) {
+        tileText = contentDiv.textContent.trim();
       }
-    }
-    
-    // Get the tile content from the tileBody field or fallback to the second div
-    let tileContent = '';
-    if (tileBodyDiv) {
-      tileContent = tileBodyDiv.innerHTML;
-    } else {
-      // Fallback to the old method if tileBody field is not found
-      const titleDiv = row.children[1] || row.children[0];
-      tileContent = titleDiv?.textContent.trim() || '';
     }
     
     // Create and add the title div
     const tilesTitleDiv = document.createElement('div');
     tilesTitleDiv.className = 'tiles-title';
-    tilesTitleDiv.innerHTML = tileContent; // Use innerHTML to preserve rich text formatting
+    tilesTitleDiv.innerHTML = tileText; // Use innerHTML to preserve rich text formatting
     
     // Add ARIA label for better accessibility
     const textContent = tilesTitleDiv.textContent.trim();

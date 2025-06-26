@@ -36,18 +36,10 @@
       "id": "tile",
       "fields": [
         {
-          "component": "reference",
-          "valueType": "string",
-          "name": "image",
-          "label": "Tile Image",
-          "multi": false,
-          "mimeTypes": ["image/jpeg", "image/png", "image/svg+xml"]
-        },
-        {
           "component": "richtext",
-          "name": "tileBody",
+          "name": "tileText",
           "value": "",
-          "label": "Tile Body Content",
+          "label": "Tile Text",
           "valueType": "string"
         }
       ]
