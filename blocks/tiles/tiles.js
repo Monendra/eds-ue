@@ -10,30 +10,23 @@ export default function decorate(block) {
   [...block.children].forEach((row) => {
     const li = document.createElement('li');
     
-    // Check if the row has an image
-    const imageDiv = row.querySelector('picture') ? 
-      row.querySelector('picture').closest('div') : null;
+    // Look for specific field keys in the row
+    let imageDiv = null;
+    let tileBodyDiv = null;
     
-    // Find the title content - either in the second div or the first non-image div
-    let titleContent = '';
-    let titleDiv = null;
-    
-    if (imageDiv) {
-      // If we have an image, find the non-image div for the title
-      [...row.children].forEach((div) => {
-        if (div !== imageDiv && !titleContent) {
-          titleContent = div.textContent.trim();
-          titleDiv = div;
-        }
-      });
-    } else {
-      // No image, use the second div (or first if only one exists)
-      titleDiv = row.children[1] || row.children[0];
-      titleContent = titleDiv?.textContent.trim() || '';
-    }
+    // Find the image and tileBody divs based on the model fields
+    [...row.children].forEach((div) => {
+      const key = div.children[0]?.textContent?.trim().toLowerCase();
+      
+      if (key === 'image' && div.children[1]?.querySelector('picture')) {
+        imageDiv = div.children[1];
+      } else if (key === 'tilebody' || key === 'tile body content') {
+        tileBodyDiv = div.children[1];
+      }
+    });
     
     // If we found an image, add it to the tile
-    if (imageDiv) {
+    if (imageDiv && imageDiv.querySelector('picture')) {
       const img = imageDiv.querySelector('img');
       if (img) {
         const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
@@ -42,23 +35,37 @@ export default function decorate(block) {
       }
     }
     
+    // Get the tile content from the tileBody field or fallback to the second div
+    let tileContent = '';
+    if (tileBodyDiv) {
+      tileContent = tileBodyDiv.innerHTML;
+    } else {
+      // Fallback to the old method if tileBody field is not found
+      const titleDiv = row.children[1] || row.children[0];
+      tileContent = titleDiv?.textContent.trim() || '';
+    }
+    
     // Create and add the title div
     const tilesTitleDiv = document.createElement('div');
     tilesTitleDiv.className = 'tiles-title';
-    tilesTitleDiv.textContent = titleContent;
+    tilesTitleDiv.innerHTML = tileContent; // Use innerHTML to preserve rich text formatting
     
     // Add ARIA label for better accessibility
-    li.setAttribute('aria-label', titleContent);
+    const textContent = tilesTitleDiv.textContent.trim();
+    li.setAttribute('aria-label', textContent);
     
     li.appendChild(tilesTitleDiv);
     ul.appendChild(li);
     
     // Make the entire tile clickable if there's a link
-    const link = titleDiv?.querySelector('a');
+    const link = tilesTitleDiv.querySelector('a');
     if (link) {
       const href = link.getAttribute('href');
-      li.addEventListener('click', () => {
-        window.location.href = href;
+      li.addEventListener('click', (e) => {
+        // Don't trigger if the click was on the link itself (to allow right-click menu)
+        if (e.target !== link && !link.contains(e.target)) {
+          window.location.href = href;
+        }
       });
       li.style.cursor = 'pointer';
     }

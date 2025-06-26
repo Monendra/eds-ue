@@ -54,6 +54,42 @@
   box-sizing: border-box;
 }
 
+/* Rich text styling within tiles */
+.tiles .tiles-title h1,
+.tiles .tiles-title h2,
+.tiles .tiles-title h3,
+.tiles .tiles-title h4,
+.tiles .tiles-title h5,
+.tiles .tiles-title h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-family: var(--heading-font-family);
+  color: var(--text-color, #131313);
+}
+
+.tiles .tiles-title p {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.6rem;
+}
+
+.tiles .tiles-title a {
+  color: var(--link-color, #3b63fb);
+  text-decoration: none;
+}
+
+.tiles .tiles-title a:hover {
+  text-decoration: underline;
+  color: var(--link-hover-color, #1d3ecf);
+}
+
+.tiles .tiles-title ul,
+.tiles .tiles-title ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-left: 2rem;
+}
+
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .tiles {
