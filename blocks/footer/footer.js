@@ -74,8 +74,8 @@ export default async function decorate(block) {
   const bottomSection = document.createElement('div');
   bottomSection.className = 'footer-bottom';
   bottomSection.innerHTML = `
-    <div class="feedback-button">
-      <a href="#" class="button">Website Feedback</a>
+    <div class="feedback-link">
+      <a href="#">Website Feedback</a>
     </div>
     <p>Western Sydney University Copyright © 2004-2025  |  ABN 53 014 069 881  |  CRICOS Provider No: 00917K  |  TEQSA Provider ID: PRV12061 (Australian University)</p>
   `;

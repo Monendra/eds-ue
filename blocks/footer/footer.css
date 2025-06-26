@@ -254,26 +254,20 @@ footer .footer a:hover {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* Website feedback button */
-.feedback-button {
+/* Website feedback link */
+.feedback-link {
   margin-bottom: 16px;
 }
 
-.feedback-button .button {
+.feedback-link a {
   display: inline-block;
-  padding: 10px 24px;
-  background-color: #3366CC;
+  padding: 10px 0;
   color: white;
-  border-radius: 24px;
   font-weight: normal;
   transition: background-color 0.2s ease;
   font-size: 17px;
 }
 
-.feedback-button .button:hover {
-  background-color: #2855b2;
-  text-decoration: none;
-}
 
 /* Responsive styles */
 @media (width >= 768px) {
