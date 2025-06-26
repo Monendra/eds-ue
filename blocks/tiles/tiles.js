@@ -2,123 +2,69 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  console.log('Tiles block decoration started');
-  console.log('Block content:', block.innerHTML);
-  
-  /* change to ul, li */
+  // Create the unordered list container
   const ul = document.createElement('ul');
-  
-  // Limit to maximum 2 tiles
-  const rows = [...block.children];
-  const maxTiles = 2;
-  const tilesToProcess = rows.slice(0, maxTiles);
-  
-  if (rows.length > maxTiles) {
-    console.log(`Note: Block has ${rows.length} rows, but only processing first ${maxTiles} tiles`);
-  }
-  
-  tilesToProcess.forEach((row) => {
-    console.log('Processing row:', row.innerHTML);
-    
+  ul.setAttribute('role', 'list'); // ARIA role for better accessibility
+
+  // Process each row in the block
+  [...block.children].forEach((row) => {
     const li = document.createElement('li');
-    moveInstrumentation(row, li);
     
-    // Process each column in the row
-    while (row.firstElementChild) li.append(row.firstElementChild);
+    // Check if the row has an image
+    const imageDiv = row.querySelector('picture') ? 
+      row.querySelector('picture').closest('div') : null;
     
-    // Organize tile content
-    let imageDiv = null;
-    let bodyDiv = null;
+    // Find the title content - either in the second div or the first non-image div
+    let titleContent = '';
+    let titleDiv = null;
     
-    [...li.children].forEach((div) => {
-      console.log('Processing div:', div.innerHTML);
-      
-      if (div.children.length === 1 && div.querySelector('picture')) {
-        div.className = 'tiles-tile-image';
-        imageDiv = div;
-      } else {
-        div.className = 'tiles-tile-body';
-        bodyDiv = div;
-        
-        // Check for tileBody field
-        const tileBodyField = [...div.children].find(child => {
-          const keyElement = child.children[0];
-          return keyElement && keyElement.textContent.trim().toLowerCase() === 'tilebody';
-        });
-        
-        if (tileBodyField) {
-          console.log('Found tileBody field:', tileBodyField.innerHTML);
-          const valueElement = tileBodyField.children[1];
-          if (valueElement) {
-            div.innerHTML = valueElement.innerHTML;
-            console.log('Set body content to:', div.innerHTML);
-          }
+    if (imageDiv) {
+      // If we have an image, find the non-image div for the title
+      [...row.children].forEach((div) => {
+        if (div !== imageDiv && !titleContent) {
+          titleContent = div.textContent.trim();
+          titleDiv = div;
         }
-      }
-    });
+      });
+    } else {
+      // No image, use the second div (or first if only one exists)
+      titleDiv = row.children[1] || row.children[0];
+      titleContent = titleDiv?.textContent.trim() || '';
+    }
     
-    // Log what we found
-    console.log('Image div found:', imageDiv ? 'yes' : 'no');
-    console.log('Body div found:', bodyDiv ? 'yes' : 'no');
-    
-    if (bodyDiv) {
-      console.log('Body div content:', bodyDiv.innerHTML);
-      
-      // Clean up the content and create proper structure
-      const content = bodyDiv.textContent.trim();
-      const lines = content.split('\n').filter(line => line.trim());
-      
-      if (lines.length > 0) {
-        const titleText = lines[0].trim();
-        const remainingContent = lines.slice(1).join(' ').trim();
-        
-        // Create clean HTML structure
-        let htmlContent = '';
-        if (titleText) {
-          htmlContent += `<h3>${titleText}</h3>`;
-        }
-        if (remainingContent) {
-          htmlContent += `<p>${remainingContent}</p>`;
-        }
-        
-        bodyDiv.innerHTML = htmlContent;
-      }
-      
-      // Add button if we have one in the content
-      const buttonLink = bodyDiv.querySelector('a[href]');
-      if (buttonLink && !buttonLink.classList.contains('button')) {
-        console.log('Converting link to button:', buttonLink.href);
-        
-        const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'button-container';
-        
-        const button = document.createElement('a');
-        button.className = 'button';
-        button.href = buttonLink.href;
-        button.textContent = buttonLink.textContent || 'FIND OUT MORE';
-        
-        buttonContainer.appendChild(button);
-        bodyDiv.appendChild(buttonContainer);
-        
-        // Remove the original link if it was just a button
-        if (buttonLink.parentElement.childNodes.length === 1) {
-          buttonLink.parentElement.remove();
-        }
+    // If we found an image, add it to the tile
+    if (imageDiv) {
+      const img = imageDiv.querySelector('img');
+      if (img) {
+        const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+        moveInstrumentation(img, optimizedPic.querySelector('img'));
+        li.appendChild(optimizedPic);
       }
     }
     
-    ul.append(li);
+    // Create and add the title div
+    const tilesTitleDiv = document.createElement('div');
+    tilesTitleDiv.className = 'tiles-title';
+    tilesTitleDiv.textContent = titleContent;
+    
+    // Add ARIA label for better accessibility
+    li.setAttribute('aria-label', titleContent);
+    
+    li.appendChild(tilesTitleDiv);
+    ul.appendChild(li);
+    
+    // Make the entire tile clickable if there's a link
+    const link = titleDiv?.querySelector('a');
+    if (link) {
+      const href = link.getAttribute('href');
+      li.addEventListener('click', () => {
+        window.location.href = href;
+      });
+      li.style.cursor = 'pointer';
+    }
   });
-  
-  // Optimize images
-  ul.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
-  
-  console.log('Final tiles HTML:', ul.innerHTML);
-  
+
+  // Clear the block and append the new structure
   block.textContent = '';
   block.append(ul);
 }
