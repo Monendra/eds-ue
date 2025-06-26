@@ -25,31 +25,49 @@ export default async function decorate(block) {
   acknowledgementSection.className = 'footer-top';
   acknowledgementSection.innerHTML = `
     <div class="acknowledgement">
-      <h2>Acknowledgement of Country</h2>
-      <div class="flag-container">
-        <div class="aboriginal-flag" title="Aboriginal Flag"></div>
-        <div class="torres-strait-flag" title="Torres Strait Islander Flag"></div>
+      <div class="acknowledgement-header">
+        <h2>Acknowledgement of Country</h2>
+        <div class="flag-container">
+          <div class="aboriginal-flag" title="Aboriginal Flag"></div>
+          <div class="torres-strait-flag" title="Torres Strait Islander Flag"></div>
+        </div>
       </div>
       <p>With respect for Aboriginal cultural protocol and out of recognition that its campuses occupy their traditional lands, Western Sydney University acknowledges the Darug, Eora, Dharawal (also referred to as Tharawal) and Wiradjuri peoples and thanks them for their support of its work in their lands in Greater Western Sydney and beyond.</p>
     </div>
   `;
   
-  // Footer links section
+  // Footer links section - placed inside the acknowledgement section
   const linksSection = document.createElement('div');
   linksSection.className = 'footer-links';
   linksSection.innerHTML = `
-    <ul class="links-group">
-      <li><a href="#">Accessibility</a></li>
-      <li><a href="#">Disclaimer</a></li>
-      <li><a href="#">Privacy</a></li>
-      <li><a href="#">Copyright</a></li>
-    </ul>
-    <ul class="links-group">
-      <li><a href="#">Complaints Unit</a></li>
-      <li><a href="#">Admissions Transparency</a></li>
-      <li><a href="#">Right to Information</a></li>
-      <li><a href="#">Emergency Help</a></li>
-    </ul>
+    <div class="links-grid">
+      <div class="links-column">
+        <a href="#">Accessibility</a>
+      </div>
+      <div class="links-column">
+        <a href="#">Disclaimer</a>
+      </div>
+      <div class="links-column">
+        <a href="#">Privacy</a>
+      </div>
+      <div class="links-column">
+        <a href="#">Copyright</a>
+      </div>
+    </div>
+    <div class="links-grid">
+      <div class="links-column">
+        <a href="#">Complaints Unit</a>
+      </div>
+      <div class="links-column">
+        <a href="#">Admissions Transparency</a>
+      </div>
+      <div class="links-column">
+        <a href="#">Right to Information</a>
+      </div>
+      <div class="links-column">
+        <a href="#">Emergency Help</a>
+      </div>
+    </div>
   `;
   
   // Website feedback and copyright section
@@ -111,9 +129,12 @@ export default async function decorate(block) {
   // Append right column to acknowledgement section
   acknowledgementSection.appendChild(rightColumn);
   
-  // Append all sections to footer container
+  // Append links section to acknowledgement section
+  const acknowledgementDiv = acknowledgementSection.querySelector('.acknowledgement');
+  acknowledgementDiv.appendChild(linksSection);
+  
+  // Append sections to footer container
   footerContainer.appendChild(acknowledgementSection);
-  footerContainer.appendChild(linksSection);
   footerContainer.appendChild(bottomSection);
   
   // Clear and append the new structure
