@@ -1,302 +1,322 @@
 footer {
-  background-color: #262223;
-  color: #FFFFFF;
-  font-size: var(--body-font-size-xs);
+    background-color: #262223;
+    color: #FFFFFF;
+    font-size: var(--body-font-size-xs);
 }
 
-footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+footer .footer>div {
+    margin: auto;
+    max-width: 1200px;
+    padding: 40px 24px 24px;
 }
 
 footer .footer p {
-  margin: 0;
+    margin: 0;
 }
 
 footer .footer a {
-  color: #FFFFFF;
-  text-decoration: none;
+    color: #FFFFFF;
+    text-decoration: none;
 }
 
 footer .footer a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* Main container padding */
 .footer-container {
-  padding: 0 10px;
+    padding: 0 10px;
 }
 
 /* Footer container */
 .footer-container {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 /* Footer top section with acknowledgement and contact info */
 .footer-top {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 16px;
 }
 
 /* Acknowledgement of Country section */
 .acknowledgement-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .acknowledgement h2 {
-  font-size: 28px;
-  margin: 0;
-  margin-right: 16px;
-  font-weight: normal;
+    font-size: 28px;
+    margin: 0;
+    margin-right: 16px;
+    font-weight: normal;
 }
 
 .flag-container {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
 /* Aboriginal flag - black over red with yellow circle */
 .aboriginal-flag {
-  width: 36px;
-  height: 24px;
-  position: relative;
-  background: linear-gradient(to bottom, black 50%, #DD0000 50%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 36px;
+    height: 24px;
+    position: relative;
+    background: linear-gradient(to bottom, black 50%, #DD0000 50%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .aboriginal-flag::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #FFFF00;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #FFFF00;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* Torres Strait Islander flag - blue, green, black with white star */
 .torres-strait-flag {
-  width: 36px;
-  height: 24px;
-  position: relative;
-  background: linear-gradient(to right, #00008B 33%, #008000 33%, #008000 66%, #00008B 66%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 36px;
+    height: 24px;
+    position: relative;
+    background: linear-gradient(to right, #00008B 33%, #008000 33%, #008000 66%, #00008B 66%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .torres-strait-flag::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background-color: white;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
 }
 
 .torres-strait-flag::after {
-  content: "★";
-  position: absolute;
-  color: white;
-  font-size: 14px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    content: "★";
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .acknowledgement p {
-  line-height: 1.6;
-  max-width: 800px;
-  font-size: 17px;
+    line-height: 1.6;
+    max-width: 800px;
+    font-size: 17px;
 }
 
 /* Contact info section */
-.contact-info h2, .follow-us h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  margin-top: 0;
-  font-weight: normal;
+.contact-info h2,
+.follow-us h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    font-weight: normal;
 }
 
-.contact-info ul, .follow-us ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.contact-info ul,
+.follow-us ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .contact-info li {
-  margin-bottom: 16px;
-  position: relative;
-  padding-left: 16px;
+    margin-bottom: 16px;
+    position: relative;
+    padding-left: 16px;
 }
 
 .contact-info li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: white;
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: white;
 }
 
 .phone a {
-  font-size: 17px;
-  font-weight: normal;
+    font-size: 17px;
+    font-weight: normal;
 }
 
 .address p {
-  line-height: 1.5;
-  margin: 0;
-  font-size: 17px;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 17px;
 }
 
 /* Follow Us section */
 .follow-us h2 {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  font-size: 28px;
-  font-weight: normal;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: normal;
 }
 
 .social-icons {
-  display: flex;
-  gap: 8px;
-  flex-wrap: nowrap;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 321px;
 }
 
 .social-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  background-color: #FFFFFF;
-  border-radius: 0;
-  transition: transform 0.2s ease;
-  margin-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: #FFFFFF;
+    border-radius: 0;
+    transition: transform 0.2s ease;
+    margin-right: 4px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.social-icon:hover {
-  transform: translateY(-3px);
+.social-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #f66;
+    z-index: -1;
+    transition: width 0.4s ease-out;
+}
+
+.social-icon:hover::before,
+.social-icon:focus::before {
+    width: 100%;
 }
 
 .social-icon img {
-  width: 20px;
-  height: 20px;
-  filter: brightness(0); /* Make icons black */
+    width: 40px;
+    height: 40px;
+    filter: brightness(0);
+    /* Make icons black */
 }
 
 /* Right column layout */
 .right-column {
-  flex: 1;
+    flex: 1;
 }
 
 /* Footer links section */
 .footer-links {
-  max-width: 800px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+    max-width: 800px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .links-grid {
-  display: flex;
-  flex-wrap: nowrap;
-  margin-bottom: 0;
-  width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 0;
+    width: 100%;
 }
 
 .links-column {
-  flex: 0 0 23%;
-  padding-right: 16px;
-  position: relative;
-  margin-bottom: 0;
-  height: 59px;
+    flex: 0 0 23%;
+    padding-right: 16px;
+    position: relative;
+    margin-bottom: 0;
+    height: 59px;
 }
 
 .links-column a {
-  display: inline-block;
-  white-space: nowrap;
-  font-size: 17px;
-  font-weight: normal;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 17px;
+    font-weight: normal;
 }
 
 /* Responsive adjustments for links */
 @media (max-width: 768px) {
-  .links-grid {
-    flex-wrap: wrap;
-  }
-  
-  .links-column {
-    flex: 0 0 50%;
-    margin-bottom: 12px;
-  }
+    .links-grid {
+        flex-wrap: wrap;
+    }
+
+    .links-column {
+        flex: 0 0 50%;
+        margin-bottom: 12px;
+    }
 }
 
 @media (max-width: 480px) {
-  .links-column {
-    flex: 0 0 100%;
-  }
+    .links-column {
+        flex: 0 0 100%;
+    }
 }
 
 
 
 .footer-bottom p {
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Website feedback link */
 .feedback-link {
-  margin-bottom: 16px;
+    margin-bottom: 16px;
 }
 
 .feedback-link a {
-  display: inline-block;
-  padding: 10px 0;
-  color: white;
-  font-weight: normal;
-  transition: background-color 0.2s ease;
-  font-size: 17px;
+    display: inline-block;
+    padding: 10px 0;
+    color: white;
+    font-weight: normal;
+    transition: background-color 0.2s ease;
+    font-size: 17px;
 }
 
 
 /* Responsive styles */
-@media (width >= 768px) {
-  .footer-links {
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  
-  .links-group {
-    margin-right: 32px;
-  }
+@media (width >=768px) {
+    .footer-links {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .links-group {
+        margin-right: 32px;
+    }
 }
 
-@media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
-  }
-  
-  .footer-top {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
-  .acknowledgement {
-    flex: 2;
-    padding-right: 40px;
-  }
-  
-  .contact-info {
-    flex: 1;
-  }
+@media (width >=900px) {
+    footer .footer>div {
+        padding: 40px 32px 24px;
+    }
+
+    .footer-top {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .acknowledgement {
+        flex: 2;
+        padding-right: 40px;
+    }
+
+    .contact-info {
+        flex: 1;
+    }
 }
