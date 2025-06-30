@@ -43,7 +43,7 @@
   margin: 0 6rem 2rem;
   font-weight: 400;
   line-height: 1.25;
-  padding: 2rem 3rem;
+  padding: 1rem 3rem;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -95,7 +95,7 @@
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .tiles {
-    padding: 1.6rem;
+    padding: 0.5rem;
   }
 
   .tiles > ul {
